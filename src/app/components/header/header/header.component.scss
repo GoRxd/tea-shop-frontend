@@ -1,0 +1,33 @@
+.site-header {
+  background-color: var(--tea-green);
+  padding: 1rem 0;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+  }
+
+  .logo {
+    margin: 0;
+    font-size: 1.75rem;
+  }
+
+  
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  nav a {
+    margin-left: 1.5rem;
+  }
+}

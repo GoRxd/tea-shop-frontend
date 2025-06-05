@@ -1,0 +1,32 @@
+/* Global resets and variables */
+:root {
+    --tea-green: #9acd32;
+    --dark-green: #4b8b3b;
+    --background: #f9f9f9;
+    --text: #333;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+html, body
+{
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background-color: var(--background);
+    color: var(--text);
+    font-family: inherit;
+}
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+a
+{
+    
+}

@@ -1,0 +1,13 @@
+<div class="page-container">
+    <div *ngIf="userData; else loadingOrError">
+    <h2>Profil użytkownika</h2>
+    <p><strong>Nazwa:</strong> {{ userData.username }}</p>
+    <p><strong>Email:</strong> {{ userData.email }}</p>
+    </div>
+
+    <ng-template #loadingOrError>
+    <p *ngIf="error">{{ error }}</p>
+    <p *ngIf="!error">Ładowanie danych użytkownika...</p>
+    </ng-template>
+
+</div>
