@@ -1,0 +1,28 @@
+<div class="cart-container" *ngIf="!loading; else loadingTpl">
+  <h2>Twój Koszyk</h2>
+
+  <div *ngIf="cartItems.length === 0">
+    <p>Koszyk jest pusty.</p>
+  </div>
+
+  <ul *ngIf="cartItems.length > 0">
+    <li *ngFor="let item of cartItems">
+      <div class="item-details">
+        <span>{{ item.productName }} (x{{ item.quantity }})</span>
+        <span>{{ item.unitPrice | currency: 'PLN' }}</span>
+        <button (click)="removeItem(item.productId)">Usuń</button>
+      </div>
+    </li>
+  </ul>
+
+  <div class="cart-summary" *ngIf="cartItems.length > 0">
+    <p><strong>Suma:</strong> {{ getTotal() | currency: 'PLN' }}</p>
+    <button (click)="clearCart()">Wyczyść koszyk</button>
+  </div>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+</div>
+
+<ng-template #loadingTpl>
+  <p>Ładowanie koszyka...</p>
+</ng-template>

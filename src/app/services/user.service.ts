@@ -13,6 +13,10 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
   register(data: { username: string; email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/users/register`, data);
   }
