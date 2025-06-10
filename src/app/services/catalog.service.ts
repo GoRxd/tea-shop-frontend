@@ -14,7 +14,7 @@ export interface Product {
   providedIn: 'root', // 👈 makes it available app-wide
 })
 export class CatalogService {
-  private apiUrl = 'https://teashop-apigateway.lemondune-a54c7cc6.northeurope.azurecontainerapps.io/catalog'; // Replace with your actual API URL
+  private apiUrl = 'http://localhost:8080/catalog'; // Replace with your actual API URL
 
   constructor(private http: HttpClient) {}
 

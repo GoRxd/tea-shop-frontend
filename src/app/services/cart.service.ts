@@ -18,7 +18,7 @@ interface CartResponse {
   providedIn: 'root'
 })
 export class CartService {
-  private apiUrl = 'https://teashop-apigateway.lemondune-a54c7cc6.northeurope.azurecontainerapps.io/carts';
+  private apiUrl = 'http://localhost:8080/carts';
 
   constructor(private http: HttpClient) {}
 
@@ -32,10 +32,10 @@ export class CartService {
   }
 
   removeFromCart(productId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/remove/${productId}`);
+    return this.http.delete(`${this.apiUrl}/item/${productId}`);
   }
 
   clearCart(): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/clear`);
+    return this.http.delete(`${this.apiUrl}/mycart`);
   }
 }

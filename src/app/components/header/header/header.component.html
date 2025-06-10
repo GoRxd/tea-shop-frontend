@@ -3,8 +3,9 @@
         <h1 class="logo"><a href="">Tea Shop</a></h1>
         <nav>
             <a href="/cart">Cart</a>
-            <a href="/login">Log in</a>
-            <a href="/profile">My Profile</a>
+            <a *ngIf="(isLoggedIn$ | async) === false" href="/login">Log in</a>
+            <a *ngIf="isLoggedIn$ | async" href="#" (click)="onLogout($event)">Log out</a>
+            <a *ngIf="isLoggedIn$ | async" href="/profile">My Profile</a>
         </nav>
     </div>
 </header>

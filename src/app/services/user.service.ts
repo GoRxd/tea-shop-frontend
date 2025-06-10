@@ -3,18 +3,24 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, tap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://teashop-apigateway.lemondune-a54c7cc6.northeurope.azurecontainerapps.io';
+  private apiUrl = 'http://localhost:8080';
   private tokenKey = 'auth_token';
+  public loggedIn$ = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(private http: HttpClient) {}
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  private hasToken(): boolean {
+    return !!localStorage.getItem('auth_token');
   }
 
   register(data: { username: string; email: string; password: string }): Observable<any> {
@@ -27,11 +33,12 @@ export class UserService {
     }
 
     console.log('Wysyłanie danych logowania:', JSON.stringify(credentials));
-
+    
     return this.http.post<{ token: string }>(`${this.apiUrl}/users/login`, credentials).pipe(
       tap((response) => {
         if (response?.token) {
           localStorage.setItem(this.tokenKey, response.token);
+          this.loggedIn$.next(true); // <-- dopiero po zapisaniu tokena
           console.log('Token zapisany w localStorage:', response.token);
         } else {
           console.warn('Brak tokena w odpowiedzi serwera:', response);
@@ -42,9 +49,13 @@ export class UserService {
         return throwError(() => error);
       })
     );
+}
+
+
+  logout() {
+    localStorage.removeItem('auth_token');
+    this.loggedIn$.next(false);
   }
-
-
 
   getProfile(): Observable<any> {
     const token = localStorage.getItem(this.tokenKey);
@@ -52,10 +63,6 @@ export class UserService {
       Authorization: `Bearer ${token}`,
     });
     return this.http.get(`${this.apiUrl}/users/me`, { headers });
-  }
-
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
   }
 
   isLoggedIn(): boolean {
