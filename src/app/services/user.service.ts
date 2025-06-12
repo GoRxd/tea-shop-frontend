@@ -33,13 +33,24 @@ export class UserService {
     }
 
     console.log('Wysyłanie danych logowania:', JSON.stringify(credentials));
-    
+
     return this.http.post<{ token: string }>(`${this.apiUrl}/users/login`, credentials).pipe(
       tap((response) => {
         if (response?.token) {
           localStorage.setItem(this.tokenKey, response.token);
-          this.loggedIn$.next(true); // <-- dopiero po zapisaniu tokena
+          this.loggedIn$.next(true);
           console.log('Token zapisany w localStorage:', response.token);
+
+          // Automatycznie pobierz profil po zalogowaniu
+          this.getProfile().subscribe({
+            next: (profile) => {
+
+            },
+            error: (err) => {
+              console.error('Błąd podczas pobierania profilu użytkownika:', err);
+            }
+          });
+
         } else {
           console.warn('Brak tokena w odpowiedzi serwera:', response);
         }
@@ -49,7 +60,7 @@ export class UserService {
         return throwError(() => error);
       })
     );
-}
+  }
 
 
   logout() {

@@ -1,11 +1,30 @@
 <div class="page-container">
   <section class="product-list">
     <h1>Our Teas</h1>
+
+    <!-- Formularz dodawania produktów (tylko dla admina) -->
+    <form *ngIf="(isUserAdmin$ | async)" (ngSubmit)="addProduct()" #productForm="ngForm" class="add-product-form">
+      <h2>Add New Product</h2>
+
+      <input type="text" name="name" [(ngModel)]="newProduct.name" placeholder="Name" required />
+      <input type="text" name="ean" [(ngModel)]="newProduct.ean" placeholder="EAN" required />
+      <input type="number" name="price" [(ngModel)]="newProduct.price" placeholder="Price" required />
+      <input type="number" name="stock" [(ngModel)]="newProduct.stock" placeholder="Stock" required />
+      <input type="text" name="country" [(ngModel)]="newProduct.country" placeholder="Country" required />
+      <input type="text" name="sku" [(ngModel)]="newProduct.sku" placeholder="SKU" required />
+      <input type="number" name="categoryId" [(ngModel)]="newProduct.categoryId" placeholder="Category ID" required />
+
+      <button type="submit">Add Product</button>
+    </form>
+
     <div class="product-grid">
       <div class="product-card" *ngFor="let product of products">
         <h2>{{ product.name }}</h2>
         <span class="price">{{ product.price }}</span>
         <button (click)="addToCart(product.id, product.name, 1, product.price)">Add to Cart</button>
+        <button *ngIf="(isUserAdmin$ | async)" (click)="deleteItem(product.id)" class="delete-btn">
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
       </div>
     </div>
   </section>

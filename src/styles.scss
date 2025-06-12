@@ -30,3 +30,21 @@ a
 {
     
 }
+
+.delete-btn {
+  background-color: #e53935 !important;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c62828;
+}
