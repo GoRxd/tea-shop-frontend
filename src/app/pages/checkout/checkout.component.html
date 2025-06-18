@@ -1,0 +1,44 @@
+<div class="page-container">
+
+  <div class="checkout-container" *ngIf="cartItems.length > 0; else emptyCart">
+    <h2>Order Summary</h2>
+
+    <ul class="cart-items">
+      <li *ngFor="let item of cartItems">
+        {{ item.unitPrice }} (x{{ item.quantity }}) — {{ item.unitPrice | currency:'PLN' }}
+      </li>
+    </ul>
+
+    <p><strong>Total:</strong> {{ getTotal() | currency:'PLN' }}</p>
+
+    <h3>Delivery Method</h3>
+    <label>
+      <input type="radio" name="delivery" [(ngModel)]="deliveryMethod" value="standard" />
+      Standard (0 PLN)
+    </label><br />
+    <label>
+      <input type="radio" name="delivery" [(ngModel)]="deliveryMethod" value="express" />
+      Express (+15 PLN)
+    </label>
+
+    <h3>Payment Method</h3>
+    <label>
+      <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="card" />
+      Credit Card
+    </label><br />
+    <label>
+      <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="blik" />
+      BLIK
+    </label><br />
+    <label>
+      <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="cash" />
+      Cash on Delivery
+    </label>
+
+    <button (click)="placeOrder()">Place Order</button>
+  </div>
+
+  <ng-template #emptyCart>
+    <p>Your cart is empty.</p>
+  </ng-template>
+</div>

@@ -21,7 +21,7 @@ export class UserProfileComponent implements OnInit {
         this.userData = data;
       },
       error: (err) => {
-        this.error = 'Błąd podczas pobierania danych użytkownika.';
+        this.error = 'Error while loading user data.';
         console.error(err);
       }
     });

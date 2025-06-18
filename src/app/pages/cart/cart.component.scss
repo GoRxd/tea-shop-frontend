@@ -31,8 +31,11 @@
   .cart-summary {
     text-align: right;
     margin-top: 1rem;
+    
 
-    button {
+    button, a {
+      text-decoration: none;
+      margin-left: 15px;
       background-color: #2ecc71;
       color: white;
       padding: 0.5rem 1rem;

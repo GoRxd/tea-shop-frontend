@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export interface CartItem {
   productId: string;
@@ -19,11 +20,17 @@ interface CartResponse {
 })
 export class CartService {
   private apiUrl = 'http://localhost:8080/carts';
+  private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
+  cartItems$ = this.cartItemsSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getCart(): Observable<CartResponse> {
-    return this.http.get<CartResponse>(`${this.apiUrl}/mycart`);
+    return this.http.get<CartResponse>(`${this.apiUrl}/mycart`).pipe(
+      tap((response) => {
+        this.cartItemsSubject.next(response.items);
+      })
+    );
   }
 
   addToCart(item: CartItem): Observable<any> {
@@ -37,5 +44,8 @@ export class CartService {
 
   clearCart(): Observable<any> {
     return this.http.delete(`${this.apiUrl}/mycart`);
+  }
+  getCurrentCartItems(): CartItem[] {
+    return this.cartItemsSubject.getValue();
   }
 }
